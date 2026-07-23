@@ -20,7 +20,7 @@ return new class extends Migration
             $table->date('issue_date');
             $table->date('result_date')->nullable();
             $table->enum('type', ['sick', 'paid', 'unpaid', 'casual', 'special_consideration']);
-            $table->enum('status', ['pending', 'approved', 'rejected'])->nullable();
+            $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
             $table->timestamps();
         });
     }

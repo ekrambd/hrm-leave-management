@@ -233,6 +233,32 @@
                 <a href="#" class="nav-link">
                   <i class="nav-icon bi bi-clipboard-fill"></i>
                   <p>
+                    Employees
+                    <i class="nav-arrow bi bi-chevron-right"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="{{route('employees.create')}}" class="nav-link">
+                      <i class="nav-icon bi bi-circle"></i>
+                      <p>Add Employee</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="{{route('employees.index')}}" class="nav-link">
+                      <i class="nav-icon bi bi-circle"></i>
+                      <p>All Employee</p>
+                    </a>
+                  </li>
+
+                </ul>
+              </li>
+
+
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="nav-icon bi bi-clipboard-fill"></i>
+                  <p>
                     Layout Options
                     <span class="nav-badge badge text-bg-secondary me-3">6</span>
                     <i class="nav-arrow bi bi-chevron-right"></i>

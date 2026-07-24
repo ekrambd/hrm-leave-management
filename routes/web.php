@@ -25,4 +25,5 @@ Route::get('/admin-logout', [AccessController::class, 'adminLogout'])->name('adm
 Route::group(['middleware' => 'prevent-back-history'],function(){
    //dashboard
 	Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
+	
 });

@@ -49,6 +49,18 @@
     
     <link rel="stylesheet" href="{{asset('custom/toastr.css')}}">
 
+    <!-- Data Table Css -->
+    <link rel="stylesheet" type="text/css" href="{{asset('backend/datatable/css/dataTables.bootstrap4.min.css')}}">
+
+    <link rel="stylesheet" type="text/css" href="{{asset('backend/datatable/css/buttons.dataTables.min.css')}}">
+    
+    <link rel="stylesheet" type="text/css" href="{{asset('backend/datatable/css/responsive.bootstrap4.min.css')}}">
+
+    <!-- Select2 -->
+   <link rel="stylesheet" href="{{asset('backend/plugins/select2/css/select2.min.css')}}">
+
+   <link rel="stylesheet" href="{{asset('backend/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
+
  
   </head>
   <!--end::Head-->
@@ -134,7 +146,7 @@
             />
             <!--end::Brand Image-->
             <!--begin::Brand Text-->
-            <span class="brand-text fw-light">AdminLTE</span>
+            <span class="brand-text fw-light">{{user()->name}}</span>
             <!--end::Brand Text-->
           </a>
           <!--end::Brand Link-->
@@ -162,31 +174,27 @@
                 <a href="#" class="nav-link">
                   <i class="nav-icon bi bi-box-seam-fill"></i>
                   <p>
-                    Widgets
+                    Departments
                     <i class="nav-arrow bi bi-chevron-right"></i>
                   </p>
                 </a>
                 <ul class="nav nav-treeview">
                   <li class="nav-item">
-                    <a href="./widgets/small-box.html" class="nav-link">
+                    <a href="#" class="nav-link">
                       <i class="nav-icon bi bi-circle"></i>
-                      <p>Small Box</p>
+                      <p>Add Department</p>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="./widgets/info-box.html" class="nav-link">
+                    <a href="#" class="nav-link">
                       <i class="nav-icon bi bi-circle"></i>
-                      <p>info Box</p>
+                      <p>All Departments</p>
                     </a>
                   </li>
-                  <li class="nav-item">
-                    <a href="./widgets/cards.html" class="nav-link">
-                      <i class="nav-icon bi bi-circle"></i>
-                      <p>Cards</p>
-                    </a>
-                  </li>
+
                 </ul>
               </li>
+
               <li class="nav-item">
                 <a href="#" class="nav-link">
                   <i class="nav-icon bi bi-clipboard-fill"></i>
@@ -563,6 +571,12 @@
 
     <script src="{{asset('custom/custom_js.js')}}"></script>
 
+    <script src="{{asset('backend/plugins/jquery-ui/jquery-ui.min.js')}}"></script>
+
+    <script src="{{asset('custom/custom.js')}}"></script>
+
+    <script src="{{asset('custom/resumable.js')}}"></script>
+
     <script
       src="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.10.1/browser/overlayscrollbars.browser.es6.min.js"
       integrity="sha256-dghWARbRe2eLlIJ56wNB+b760ywulqK3DzZYEpsg2fQ="
@@ -584,6 +598,21 @@
     <script src="{{asset('/backend')}}/dist/js/adminlte.js"></script>
     <!--end::Required Plugin(AdminLTE)--><!--begin::OverlayScrollbars Configure-->
 
+  <!-- data-table js -->
+  <script src="{{asset('backend/datatable/js/jquery.dataTables.min.js')}}"></script>
+
+  <script src="{{asset('backend/datatable/js/dataTables.buttons.min.js')}}"></script>
+
+  <!-- Select2 -->
+  <script src="{{asset('backend/plugins/select2/js/select2.full.min.js')}}"></script>
+
+  <script src="{{asset('backend/datatable/js/dataTables.bootstrap4.min.js')}}"></script>
+
+  <script src="{{asset('backend/datatable/js/dataTables.responsive.min.js')}}"></script>
+
+  <script src="{{asset('backend/datatable/js/responsive.bootstrap4.min.js')}}"></script>
+
+  <script src="{{asset('backend/datatable/js/data-table-custom.js')}}"></script>
 
   <script src="{{asset('custom/toastr.js')}}"></script>
  

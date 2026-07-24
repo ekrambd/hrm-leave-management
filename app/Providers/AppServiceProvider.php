@@ -5,6 +5,10 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Pagination\Paginator;
+use App\Repositories\DesignatonRepository;
+use App\Repositories\Interfaces\DesignatonRepositoryInterface;
+use App\Repositories\DepartmentRepository;
+use App\Repositories\Interfaces\DepartmentRepositoryInterface;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -13,7 +17,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->bind(
+            DesignationRepositoryInterface::class,
+            DesignationRepository::class
+        );
+        $this->app->bind(
+            DepartmentRepositoryInterface::class,
+            DepartmentRepository::class
+        );
     }
 
     /**

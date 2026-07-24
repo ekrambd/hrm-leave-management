@@ -99,7 +99,7 @@ class DepartmentController extends Controller
                 'alert-type'=> 'success'
             );
 
-            return redirect()->back()->with($notification);
+            return redirect('/departments')->with($notification);
         }catch(\Exception $e){
             return response()->json(['status'=>false, 'code'=>$e->getCode(), 'message'=>$e->getMessage()],500);
         }

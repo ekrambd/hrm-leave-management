@@ -5,7 +5,7 @@ namespace App\Services;
 use App\Repositories\Interfaces\DepartmentRepositoryInterface;
 
 
-class DesignationService
+class DepartmentService
 {
 	protected $departmentRepository;
 

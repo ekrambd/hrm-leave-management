@@ -5,19 +5,12 @@ namespace App\Repositories;
 use App\Models\Department;
 use App\Repositories\Interfaces\DepartmentRepositoryInterface;
 
-class DesignationRepository implements DepartmentRepositoryInterface
+class DepartmentRepository implements DepartmentRepositoryInterface
 {
 	public function getAll($request)
     {
         $query = Department::query();
-
-        if ($request->filled('search')) {
-            $query->where('department_name', 'like', '%' . $request->search . '%');
-        }
-
-        return $query
-            ->latest()
-            ->paginate($request->get('per_page', 10));
+        return $query;
     }
 
     public function create(array $data)
@@ -28,7 +21,6 @@ class DesignationRepository implements DepartmentRepositoryInterface
     public function update($department, array $data)
     {
         $department->update($data);
-
         return $department->fresh();
     }
 

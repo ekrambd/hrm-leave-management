@@ -30,6 +30,11 @@ class DesignationController extends Controller
             return DataTables::of($designations)
                 ->addIndexColumn()
 
+
+                ->addColumn('department', function ($row) {
+                    return $row->department->department_name;
+                })
+
                 ->addColumn('action', function ($row) {
                     $btn = "";
                     $btn .= ' <a href="' . route('designations.show', $row->id) . '" class="btn btn-primary btn-sm action-button edit-product-designation"><i class="fa fa-edit"></i></a>';
@@ -37,7 +42,7 @@ class DesignationController extends Controller
                     $btn .= ' <button type="button" class="btn btn-danger btn-sm delete-designation action-button" data-id="' . $row->id . '"><i class="fa fa-trash"></i></button>';
                     return $btn;
                 })
-                ->rawColumns(['action']) 
+                ->rawColumns(['action','department']) 
                 ->make(true);
         }
         return view('designations.index');
@@ -74,7 +79,7 @@ class DesignationController extends Controller
      * Display the specified resource.
      */
     public function show(Designation $designation)
-    {
+    {   
         return view('designations.edit',compact('designation'));
     }
 

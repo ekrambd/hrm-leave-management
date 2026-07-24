@@ -14,4 +14,9 @@ class Designation extends Model
         'department_id',
         'designation_name',
     ];
+
+    public function department()
+    {
+        return $this->belongsTo(Department::class);
+    }
 }

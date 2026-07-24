@@ -8,4 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Department extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'user_id',
+        'department_name',
+    ];
+
+    public function designations()
+    {
+        return $this->hasMany(Designation::class);
+    }
 }

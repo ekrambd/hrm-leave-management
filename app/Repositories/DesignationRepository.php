@@ -10,14 +10,7 @@ class DesignationRepository implements DesignationRepositoryInterface
 	public function getAll($request)
     {
         $query = Designation::query();
-
-        if ($request->filled('search')) {
-            $query->where('designation_name', 'like', '%' . $request->search . '%');
-        }
-
-        return $query
-            ->latest()
-            ->paginate($request->get('per_page', 10));
+        return $query;
     }
 
     public function create(array $data)

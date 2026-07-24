@@ -5,8 +5,8 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Pagination\Paginator;
-use App\Repositories\DesignatonRepository;
-use App\Repositories\Interfaces\DesignatonRepositoryInterface;
+use App\Repositories\DesignationRepository;
+use App\Repositories\Interfaces\DesignationRepositoryInterface;
 use App\Repositories\DepartmentRepository;
 use App\Repositories\Interfaces\DepartmentRepositoryInterface;
 

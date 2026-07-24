@@ -5,6 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <title>Admin | Dashboard</title>
     <!--begin::Primary Meta Tags-->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="title" content="AdminLTE v4 | Dashboard" />
     <meta name="author" content="ColorlibHQ" />
@@ -43,6 +44,12 @@
     <!--end::Third Party Plugin(Bootstrap Icons)-->
     <!--begin::Required Plugin(AdminLTE)-->
     <link rel="stylesheet" href="{{asset('/backend')}}/dist/css/adminlte.css" />
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{{asset('backend/plugins/fontawesome-free/css/all.min.css')}}">
+
     <!--end::Required Plugin(AdminLTE)-->
 
     <link rel="stylesheet" href="{{asset('custom/style.css')}}">
@@ -180,13 +187,13 @@
                 </a>
                 <ul class="nav nav-treeview">
                   <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="{{route('departments.create')}}" class="nav-link">
                       <i class="nav-icon bi bi-circle"></i>
                       <p>Add Department</p>
                     </a>
                   </li>
                   <li class="nav-item">
-                    <a href="#" class="nav-link">
+                    <a href="{{route('departments.index')}}" class="nav-link">
                       <i class="nav-icon bi bi-circle"></i>
                       <p>All Departments</p>
                     </a>
@@ -194,6 +201,33 @@
 
                 </ul>
               </li>
+
+
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="nav-icon bi bi-clipboard-fill"></i>
+                  <p>
+                    Designations
+                    <i class="nav-arrow bi bi-chevron-right"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="{{route('designations.create')}}" class="nav-link">
+                      <i class="nav-icon bi bi-circle"></i>
+                      <p>Add Designation</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="{{route('designations.index')}}" class="nav-link">
+                      <i class="nav-icon bi bi-circle"></i>
+                      <p>All Designation</p>
+                    </a>
+                  </li>
+
+                </ul>
+              </li>
+
 
               <li class="nav-item">
                 <a href="#" class="nav-link">
@@ -574,6 +608,7 @@
     <script src="{{asset('backend/plugins/jquery-ui/jquery-ui.min.js')}}"></script>
 
     <script src="{{asset('custom/custom.js')}}"></script>
+
 
     <script src="{{asset('custom/resumable.js')}}"></script>
 

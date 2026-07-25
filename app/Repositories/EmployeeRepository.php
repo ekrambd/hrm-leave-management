@@ -12,27 +12,27 @@ class EmployeeRepository implements EmployeeRepositoryInterface
     {
         $query = Employee::with(['user','department','designation']);
 
-        // if ($request->filled('search')) {
+        if ($request->filled('search')) {
 
-        //     $search = $request->search;
+            $search = $request->search;
 
-        //     $query->where('employee_code', 'like', "%{$search}%")
-        //           ->orWhereHas('user', function ($q) use ($search) {
-        //                 $q->where('name', 'like', "%{$search}%")
-        //                   ->orWhere('email', 'like', "%{$search}%")
-        //                   ->orWhere('phone', 'like', "%{$search}%");
-        //           });
-        // }
+            $query->where('employee_code', 'like', "%{$search}%")
+                  ->orWhereHas('user', function ($q) use ($search) {
+                        $q->where('name', 'like', "%{$search}%")
+                          ->orWhere('email', 'like', "%{$search}%")
+                          ->orWhere('phone', 'like', "%{$search}%");
+                  });
+        }
 
-        // // Department Filter
-        // if ($request->filled('department_id')) {
-        //     $query->where('department_id', $request->department_id);
-        // }
+        // Department Filter
+        if ($request->filled('department_id')) {
+            $query->where('department_id', $request->department_id);
+        }
 
-        // // Designation Filter
-        // if ($request->filled('designation_id')) {
-        //     $query->where('designation_id', $request->designation_id);
-        // }
+        // Designation Filter
+        if ($request->filled('designation_id')) {
+            $query->where('designation_id', $request->designation_id);
+        }
 
         return $query;
     }

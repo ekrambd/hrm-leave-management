@@ -68,6 +68,9 @@
 
    <link rel="stylesheet" href="{{asset('backend/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css')}}">
 
+
+   <link rel="stylesheet" href="{{asset('dropify/dist/css/dropify.min.css')}}">
+
  
   </head>
   <!--end::Head-->
@@ -674,6 +677,8 @@
   <script src="{{asset('backend/datatable/js/responsive.bootstrap4.min.js')}}"></script>
 
   <script src="{{asset('backend/datatable/js/data-table-custom.js')}}"></script>
+
+  <script src="{{asset('dropify/dist/js/dropify.min.js')}}"></script>
 
   <script src="{{asset('custom/toastr.js')}}"></script>
  

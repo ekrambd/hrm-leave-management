@@ -8,6 +8,7 @@ use App\Http\Requests\StoreEmployeeRequest;
 use App\Http\Requests\UpdateEmployeeRequest;
 use App\Services\EmployeeService;
 use DataTables;
+use DB;
 
 class EmployeeController extends Controller
 {
@@ -27,7 +28,7 @@ class EmployeeController extends Controller
     {
         if ($request->ajax()) {
 
-            $employees = $this->employeeService->index($request);
+            $employees = $this->employeeService->index($request)->latest();
 
             return DataTables::of($employees)
                 ->addIndexColumn()
@@ -60,13 +61,13 @@ class EmployeeController extends Controller
                 ->addColumn('action', function ($row) {
 
                     $btn = '';
-
+                    $btn .= '&nbsp;';
                     $btn .= '<a href="' . route('employees.show', $row->id) . '" class="btn btn-primary btn-sm"><i class="fa fa-edit"></i></a>';
 
                     $btn .= '&nbsp;';
 
                     $btn .= '<button type="button"
-                                class="btn btn-danger btn-sm delete-employee"
+                                class="btn btn-danger btn-sm delete-employee mx-2 my-2"
                                 data-id="' . $row->id . '">
                                 <i class="fa fa-trash"></i>
                               </button>';
@@ -136,13 +137,13 @@ class EmployeeController extends Controller
         DB::beginTransaction();
         try
         {
-            $employee = $this->employeeService->store($request,$employee);
+            $employee = $this->employeeService->update($request,$employee);
             $notification = array(
                 'messege'=> "Successfully the employee has been updated",
                 'alert-type'=> 'success'
             );
             DB::commit();
-            return redirect()->back()->with($notification);
+            return redirect('/employees')->with($notification);
         }catch(\Exception $e){
             DB::rollback();
             return response()->json(['status'=>false, 'code'=>$e->getCode(), 'message'=>$e->getMessage()],500);

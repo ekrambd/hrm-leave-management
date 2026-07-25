@@ -28,7 +28,7 @@ class UpdateEmployeeRequest extends FormRequest
             'image'          => 'nullable|image|mimes:jpg,jpeg,png,webp,gif',
             'department_id'  => 'required|integer|exists:departments,id',
             'designation_id' => 'required|integer|exists:designations,id',
-            'employee_code'  => 'required|string|unique:users,employee_code,' . $this->employee->id,
+            'employee_code'  => 'required|string|unique:employees,employee_code,' . $this->employee->id,
             'sick_leave'     => 'required|integer',
             'paid_leave'     => 'required|integer',
             'casual_leave'   => 'required|integer', 

@@ -54,4 +54,4 @@ Route::group(['middleware' => 'prevent-back-history'],function(){
 });
 
 //ajax requests
-Route::get('/departments/{department}/designations', [AjaxController::class, 'designations']);
+Route::get('designations-by-department', [AjaxController::class, 'designationsByDepartment']);

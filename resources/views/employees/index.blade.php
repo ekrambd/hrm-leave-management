@@ -40,7 +40,7 @@
 
                                 <div class="row mb-3">
 
-                                    <div class="col-md-3">
+                                    <div class="col-md-6">
                                         <select class="form-control select2bs4" id="department_filter">
                                             <option value="">All Departments</option>
 
@@ -53,7 +53,7 @@
                                         </select>
                                     </div>
 
-                                    <div class="col-md-3">
+                                    <div class="col-md-6">
                                         <select class="form-control select2bs4" id="designation_filter">
                                             <option value="">All Designations</option>
 
@@ -66,7 +66,7 @@
                                         </select>
                                     </div>
 
-                                    <div class="col-md-6 text-end">
+                                    <div class="col-md-12 text-end my-2">
                                         <a href="{{ route('employees.create') }}"
                                            class="btn btn-success">
                                             <i class="fa fa-plus"></i>
@@ -146,6 +146,8 @@ $(function(){
 
             data:function(d){
 
+                d.search       = $('.dataTables_filter input').val();
+
                 d.department_id = $('#department_filter').val();
 
                 d.designation_id = $('#designation_filter').val();
@@ -212,21 +214,29 @@ $(function(){
 
         $('#designation_filter').html('<option value="">All Designations</option>');
 
-        if(id==""){
+        // if(id==""){
 
-            employeeTable.ajax.reload();
+        //     employeeTable.ajax.reload();
 
-            return;
+        //     return;
 
+        // }
+
+        if(id == ""){
+            id = "all_department";
         }
 
         $.ajax({
 
-            url:"{{ url('departments') }}/"+id+"/designations",
+            url:"{{ url('designations-by-department') }}",
 
             type:"GET",
 
+            data:{'department_id':id},
+
             success:function(response){
+
+                console.log(response);
 
                 $.each(response,function(key,value){
 

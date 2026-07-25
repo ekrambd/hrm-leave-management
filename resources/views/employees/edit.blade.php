@@ -25,7 +25,7 @@
                     <div class="col-md-12">
 
                         <div class="card">
-                            <div class="card-header bg-primary text-light">
+                            <div class="card-header bg-success text-light">
                                 <div class="card-title">Edit Employee</div>
                             </div>
 
@@ -38,11 +38,12 @@
                                     <div class="row">
 
                                         <div class="col-md-6 mb-3">
-                                            <label>Name</label>
+                                            <label for="name">Name</label>
 
                                             <input type="text"
                                                    class="form-control"
                                                    name="name"
+                                                   id="name"
                                                    value="{{ old('name',$employee->user->name) }}"
                                                    required>
 
@@ -52,11 +53,12 @@
                                         </div>
 
                                         <div class="col-md-6 mb-3">
-                                            <label>Email</label>
+                                            <label for="email">Email <span class="required">*</span></label>
 
                                             <input type="email"
                                                    class="form-control"
                                                    name="email"
+                                                   id="email"
                                                    value="{{ old('email',$employee->user->email) }}">
 
                                             @error('email')
@@ -65,11 +67,12 @@
                                         </div>
 
                                         <div class="col-md-6 mb-3">
-                                            <label>Phone</label>
+                                            <label for="phone">Phone <span class="required">*</span></label>
 
                                             <input type="text"
                                                    class="form-control"
                                                    name="phone"
+                                                   id="phone"
                                                    value="{{ old('phone',$employee->user->phone) }}">
 
                                             @error('phone')
@@ -78,11 +81,12 @@
                                         </div>
 
                                         <div class="col-md-6 mb-3">
-                                            <label>Employee Code</label>
+                                            <label for="employee_code">Employee Code <span class="required">*</span></label>
 
                                             <input type="text"
                                                    class="form-control"
                                                    name="employee_code"
+                                                   id="employee_code"
                                                    value="{{ old('employee_code',$employee->employee_code) }}"
                                                    required>
 
@@ -92,11 +96,11 @@
                                         </div>
 
                                         <div class="col-md-6 mb-3">
-                                            <label>Department</label>
+                                            <label for="department_id">Department <span class="required">*</span></label>
 
                                             <select class="form-control select2bs4"
                                                     name="department_id"
-                                                    required>
+                                                    required id="department_id">
 
                                                 @foreach(departments() as $department)
 
@@ -115,11 +119,11 @@
                                         </div>
 
                                         <div class="col-md-6 mb-3">
-                                            <label>Designation</label>
+                                            <label for="designation_id">Designation <span class="required">*</span></label>
 
                                             <select class="form-control select2bs4"
                                                     name="designation_id"
-                                                    required>
+                                                    required id="designation_id">
 
                                                 @foreach(designations() as $designation)
 
@@ -138,58 +142,49 @@
                                         </div>
 
                                         <div class="col-md-4 mb-3">
-                                            <label>Paid Leave</label>
+                                            <label for="paid_leave">Paid Leave <span class="required">*</span></label>
 
                                             <input type="number"
                                                    class="form-control"
                                                    name="paid_leave"
+                                                   id="paid_leave"
                                                    value="{{ old('paid_leave',$employee->paid_leave) }}">
                                         </div>
 
                                         <div class="col-md-4 mb-3">
-                                            <label>Sick Leave</label>
+                                            <label for="sick_leave">Sick Leave <span class="required">*</span></label>
 
                                             <input type="number"
                                                    class="form-control"
                                                    name="sick_leave"
+                                                   id="sick_leave"
                                                    value="{{ old('sick_leave',$employee->sick_leave) }}">
                                         </div>
 
                                         <div class="col-md-4 mb-3">
-                                            <label>Casual Leave</label>
+                                            <label for="casual_leave">Casual Leave <span class="required">*</span></label>
 
                                             <input type="number"
                                                    class="form-control"
                                                    name="casual_leave"
+                                                   id="casual_leave"
                                                    value="{{ old('casual_leave',$employee->casual_leave) }}">
                                         </div>
 
-                                        <div class="col-md-6 mb-3">
-                                            <label>Profile Image</label>
+                                        <div class="col-md-12 mb-3">
+                                            <label for="image">Profile Image</label>
 
-                                            <input type="file"
-                                                   class="form-control"
-                                                   name="image">
+                                            <input name="image" type="file" id="image" accept="image/*" class="dropify" data-default-file="{{URL::to($employee->user->image)}}" data-height="150" />
 
                                             @error('image')
                                             <p class="alert alert-danger">{{ $message }}</p>
                                             @enderror
                                         </div>
 
-                                        <div class="col-md-6 mb-3">
-
-                                            @if($employee->user->image)
-                                                <img src="{{ asset($employee->user->image) }}"
-                                                     width="120"
-                                                     class="img-thumbnail">
-                                            @endif
-
-                                        </div>
-
                                     </div>
 
-                                    <button class="btn btn-primary">
-                                        Update
+                                    <button class="btn btn-success">
+                                        Save Changes
                                     </button>
 
                                 </div>
@@ -206,3 +201,39 @@
     </div>
 </main>
 @endsection
+@push('scripts')
+<script>
+  $(document).ready(function(){
+     // Department Change
+    $('#department_id').change(function(){
+
+        let id = $(this).val();
+
+        $('#designation_id').html('<option value="" selected="" disabled="">Select Designation</option>');
+
+        $.ajax({
+
+            url:"{{ url('designations-by-department') }}",
+
+            type:"GET",
+
+            data:{'department_id':id},
+
+            success:function(response){
+                $.each(response,function(key,value){
+
+                    $('#designation_id').append(
+                        '<option value="'+value.id+'">'+value.designation_name+'</option>'
+                    );
+
+                });
+
+            }
+
+        });
+
+
+    });
+  });  
+</script>
+@endpush

@@ -33,7 +33,7 @@ class StoreEmployeeRequest extends FormRequest
             'paid_leave'       => 'required|integer',
             'casual_leave'     => 'required|integer',
             'password'         => 'required|string|min:6',
-            'confirm_password' => 
+            'confirm_password' => 'required|same:password',
         ];
     }
 }

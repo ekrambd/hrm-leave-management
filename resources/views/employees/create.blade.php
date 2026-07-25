@@ -245,7 +245,7 @@
                                                 Profile Image
                                             </label>
 
-                                            <input name="image" type="file" id="image" accept="image/*" class="dropify" required="" data-height="150" />
+                                            <input name="image" type="file" id="image" accept="image/*" class="dropify" data-height="150" />
 
                                             @error('image')
                                             <p class="alert alert-danger">{{ $message }}</p>

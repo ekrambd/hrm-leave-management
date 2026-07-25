@@ -243,6 +243,9 @@
             @endif
 
 
+            
+
+
             @if(user()->role_id != 2)
 
               <li class="nav-item">
@@ -321,6 +324,30 @@
 
                 </ul>
               </li>
+
+
+              
+
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="nav-icon bi bi-box-seam-fill"></i>
+                  <p>
+                    Leave Requests
+                    <i class="nav-arrow bi bi-chevron-right"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="{{route('leaves.requests')}}" class="nav-link">
+                      <i class="nav-icon bi bi-circle"></i>
+                      <p>All Leave Requests</p>
+                    </a>
+                  </li>
+
+                </ul>
+              </li>
+
+           
 
             @endif
 

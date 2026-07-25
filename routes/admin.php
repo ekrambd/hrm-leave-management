@@ -6,6 +6,7 @@ use App\Http\Controllers\AccessController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\DesignationController;
 use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\LeaveController;
 
 Route::group(['middleware' => 'prevent-back-history'],function(){
 	//departments
@@ -30,4 +31,7 @@ Route::group(['middleware' => 'prevent-back-history'],function(){
 		Route::get('employees/{employee}', [EmployeeController::class, 'show'])->name('employees.show');
 		Route::patch('employees/{employee}', [EmployeeController::class, 'update'])->name('employees.update');
 		Route::delete('employees/{employee}', [EmployeeController::class, 'destroy'])->name('employees.delete');
+
+	//leave requests
+	   Route::get('/leave-requests', [LeaveController::class, 'leaveRequests'])->name('leaves.requests');
 });

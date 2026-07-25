@@ -44,6 +44,85 @@ class LeaveController extends Controller
         return view('leaves.index');
     }
 
+
+    public function leaveRequests(Request $request)
+    {
+        if($request->ajax()){
+            $query = $this->leaveService->index($request);
+
+            if ($request->filled('search')) {
+
+                $search = $request->search;
+
+                $query->where(function ($q) use ($search) {
+
+                    // Leave ID Search
+                    $q->where('leaves.id', 'like', "%{$search}%")
+
+                      // Employee Related Search
+                      ->orWhereHas('employee', function ($employee) use ($search) {
+
+                          $employee->where('employee_code', 'like', "%{$search}%")
+                                   ->orWhereHas('user', function ($user) use ($search) {
+
+                                       $user->where('name', 'like', "%{$search}%")
+                                            ->orWhere('email', 'like', "%{$search}%")
+                                            ->orWhere('phone', 'like', "%{$search}%");
+
+                                   })
+                                   ->orWhereHas('department', function ($department) use ($search) {
+
+                                       $department->where('department_name', 'like', "%{$search}%");
+
+                                   })
+                                   ->orWhereHas('designation', function ($designation) use ($search) {
+
+                                       $designation->where('designation_name', 'like', "%{$search}%");
+
+                                   });
+
+                      });
+
+                });
+            }
+
+            $leaves = $query->latest();
+
+            return DataTables::of($leaves)
+                ->addIndexColumn()
+
+                ->addColumn('employee_name', function ($row) {
+                    return $row->employee->user->name;
+                })
+
+                ->addColumn('employee_code', function ($row) {
+                    return $row->employee->employee_code;
+                })
+
+                ->addColumn('department', function ($row) {
+                    return $row->employee->department->department_name;
+                })
+
+                ->addColumn('designation', function ($row) {
+                    return $row->employee->designation->designation_name;
+                })
+
+
+
+                ->addColumn('action', function ($row) {
+                    $btn = "";
+                    $btn .= '&nbsp;';
+                    $btn .= ' <a href="' . route('leaves.show', $row->id) . '" class="btn btn-primary btn-sm action-button edit-product-leave"><i class="fa fa-eye"></i></a>';
+                    $btn .= '&nbsp;';
+                    $btn .= ' <a href="' . route('leaves.show', $row->id) . '" class="btn btn-danger btn-sm action-button" data-id="' . $row->id . '"><i class="nav-icon bi bi-table"></i></a>';
+                    return $btn;
+                })
+                ->rawColumns(['action','employee_name','employee_code','department','designation','']) 
+                ->make(true);
+        }
+        return view('leaves.leave_requests'); 
+    }
+
     /**
      * Show the form for creating a new resource.
      */

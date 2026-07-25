@@ -85,11 +85,11 @@
                 @if(user()->role_id == 1)
                   <div class="mb-3">
                     <label for="status" class="form-label">Select Status <span class="required">*</span></label>
-                    <select class="form-control select2bs4" name="type" id="type" required>
+                    <select class="form-control select2bs4" name="status" id="status" required>
                     	<option value="" selected="" disabled="">Select Status Type</option>
-                    	<option value="pending" <?php if($leave->type == 'pending'){echo "selected";} ?>>Pending</option>
-                    	<option value="approved" <?php if($leave->type == 'approved'){echo "selected";} ?>>Approved</option>
-                    	<option value="rejected" <?php if($leave->type == 'rejected'){echo "selected";} ?>>Rejected</option>
+                    	<option value="pending" <?php if($leave->status == 'pending'){echo "selected";} ?>>Pending</option>
+                    	<option value="approved" <?php if($leave->status == 'approved'){echo "selected";} ?>>Approved</option>
+                    	<option value="rejected" <?php if($leave->status == 'rejected'){echo "selected";} ?>>Rejected</option>
                     </select>
 
                   </div>

@@ -39,6 +39,7 @@ class LeaveService
     public function statusUpdate($request,$leave)
     {
         return $this->leaveRepository->statusUpdate($leave,[
+            'type'  => $request->type,
             'status' => $request->status,
         ]); 
     }

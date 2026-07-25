@@ -14,6 +14,10 @@ return [
     |
     */
 
+    'socket' => [
+        'url' => env('SOCKET_SERVER_URL', 'http://127.0.0.1:3000'),
+    ],
+
     'mailgun' => [
         'domain' => env('MAILGUN_DOMAIN'),
         'secret' => env('MAILGUN_SECRET'),

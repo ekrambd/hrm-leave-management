@@ -6,6 +6,7 @@ use App\Models\Leave;
 use App\Repositories\Interfaces\LeaveRepositoryInterface;
 use App\Notifications\LeaveRequestNotification;
 use App\Models\User;
+use Illuminate\Support\Facades\Http;
 
 class LeaveRepository implements LeaveRepositoryInterface
 {
@@ -18,15 +19,30 @@ class LeaveRepository implements LeaveRepositoryInterface
     public function create(array $data)
     {
         $leave = Leave::create($data);
-        if($leave){
-            $admin = User::where('role_id',1)->first();
+        if ($leave) {
+
+            $admin = admin();
+
             $admin->notify(
                 new LeaveRequestNotification(
                     'A New Leave Request',
                     'A New Leave Request From an Employee',
                     $leave->id
                 )
-            ); 
+            );
+
+            // Socket Notification
+            Http::post(config('services.socket.url').'/leave-request', [
+                'admin_id' => $admin->id,
+                'payload' => [
+                    'leave_id'      => $leave->id,
+                    'employee_name' => $leave->employee->user->name,
+                    'title'         => 'A New Leave Request',
+                    'message'       => 'A New Leave Request From an Employee',
+                    'created_at'    => now()->diffForHumans(),
+                    'notification_id' => $admin->fresh()->unreadNotifications()->latest()->first()?->id,
+                ]
+            ]);
         }
     }
 

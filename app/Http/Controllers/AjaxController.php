@@ -56,4 +56,15 @@ class AjaxController extends Controller
         }
     }
 
+    public function latestNotifications()
+    {
+        try
+        {
+            $notifications = unReadNotifications();
+            return response()->json($notifications);
+        }catch(\Exception $e){
+            return response()->json(['status'=>false, 'code'=>$e->getCode(), 'message'=>$e->getMessage()],500);
+        }
+    }
+
 }

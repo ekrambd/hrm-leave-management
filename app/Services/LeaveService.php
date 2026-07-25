@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Repositories\Interfaces\LeaveRepositoryInterface;
 
+
 class LeaveService
 {
 	protected $leaveRepository;
@@ -22,19 +23,21 @@ class LeaveService
 
     public function store($request)
     {
-        return $this->leaveRepository->create([
-            'employee_id'       => user()->employee->id,
-            'leave_reason'      => $request->leave_reason,
-            'leave_review'      => $request->leave_review,
-            'issue_date'        => date('Y-m-d'),
-            'from_date'         => $request->from_date,
-            'to_date'           => $request->to_date,
-            'leave_duration'    => leaveDuration($request->from_date,$request->to_date),
-            'result_date'       => $request->result_date,
-            'type'              => $request->type,
-            'status'            => $request->has('status') ? $request->status : 'pending',
+        $leave = $this->leaveRepository->create([
+            'employee_id'    => user()->employee->id,
+            'leave_reason'   => $request->leave_reason,
+            'leave_review'   => $request->leave_review,
+            'issue_date'     => date('Y-m-d'),
+            'from_date'      => $request->from_date,
+            'to_date'        => $request->to_date,
+            'leave_duration' => leaveDuration($request->from_date, $request->to_date),
+            'result_date'    => $request->result_date,
+            'type'           => $request->type,
+            'status'         => $request->input('status', 'pending'),
         ]);
-    }
+
+        return $leave;
+    } 
 
     public function statusUpdate($request,$leave)
     {

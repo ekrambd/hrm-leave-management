@@ -2,6 +2,7 @@
 use App\Models\Department;
 use App\Models\Designation;
 use App\Services\EmployeeService;
+use App\Models\User;
 
 
 if (!function_exists('employeeService')) {
@@ -17,6 +18,12 @@ function user()
 {
 	$user = auth()->user();
 	return $user;
+}
+
+function admin()
+{
+    $user = User::where('role_id',1)->first();
+    return $user;
 }
 
 function departments()

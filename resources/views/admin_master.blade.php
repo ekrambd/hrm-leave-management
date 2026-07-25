@@ -114,11 +114,12 @@
                 aria-label="Notifications: 15 unread"
               >
                 <i class="bi bi-bell-fill bg-primary"></i>
-                <span class="navbar-badge badge text-bg-warning">{{count(unReadNotifications())}}</span>
+                <span class="navbar-badge badge text-bg-warning count-notification">{{count(unReadNotifications())}}</span>
               </a>
               <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
-                <span class="dropdown-item dropdown-header">{{count(unReadNotifications())}} Notifications</span>
+                <span class="dropdown-item dropdown-header"><span class="count-notification">{{count(unReadNotifications())}}</span> Notifications</span>
                 <div class="dropdown-divider"></div>
+               <div class="noitification-lists">
               @foreach(unReadNotifications() as $row)
                 <div class="dropdown-divider"></div>
                 <a href="{{url('/notification-read/'.$row->id)}}" class="dropdown-item">
@@ -126,6 +127,7 @@
                   <span class="float-end text-secondary fs-7">{{ $row->created_at->shortRelativeDiffForHumans() }}</span>
                 </a>
               @endforeach
+            </div>
                 <div class="dropdown-divider"></div>
                 <a href="#" class="dropdown-item dropdown-footer"> See All Notifications </a>
               </div>
@@ -745,6 +747,8 @@
 
   <script src="{{asset('dropify/dist/js/dropify.min.js')}}"></script>
 
+  <script src="https://cdn.socket.io/4.7.1/socket.io.min.js"></script>
+
   <!-- Summernote -->
 <script src="{{asset('backend/plugins/summernote/summernote-bs4.min.js')}}"></script>
 
@@ -769,6 +773,78 @@
         }
       @endif
     </script>
+
+
+    @if(user()->id == admin()->id)
+    <script>
+    $(document).ready(function () {
+
+        let socket = io("{{ config('services.socket.url') }}", {
+            transports: ["websocket"]
+        });
+
+        let Admin_ID = "{{ user()->id }}";
+
+        let countNotification = parseInt("{{ count(unReadNotifications()) }}");
+
+        socket.on("connect", function () {
+
+            console.log("Connected:", socket.id);
+
+            socket.emit("join_admin_room", Admin_ID);
+
+        });
+
+        socket.on("leave_request_created", function (data) {
+
+          countNotification++;
+
+          $('.count-notification').text(countNotification);
+
+          $.get("{{ route('notifications.latest') }}", function (data) {
+
+              let html = '';
+
+              $.each(data, function(index, row){
+
+                  html += `
+                      <div class="dropdown-divider"></div>
+
+                      <a href="/notification-read/${row.id}" class="dropdown-item">
+                          <i class="bi bi-people-fill me-2"></i>
+                          ${row.data.title}
+
+                          <span class="float-end text-secondary fs-7">
+                              just now
+                          </span>
+                      </a>
+                  `;
+
+              });
+
+              $('.noitification-lists').html(html);
+
+          });
+
+          toastr.success(data.message);
+
+      });
+
+        socket.on("disconnect", function (reason) {
+
+            console.log("Disconnected:", reason);
+
+        });
+
+        socket.on("connect_error", function (err) {
+
+            console.log("Connect Error:", err.message);
+
+        });
+
+    });
+    </script>
+    @endif
 
   
    @stack('scripts')

@@ -11,6 +11,8 @@ use App\Repositories\DepartmentRepository;
 use App\Repositories\Interfaces\DepartmentRepositoryInterface;
 use App\Repositories\EmployeeRepository;
 use App\Repositories\Interfaces\EmployeeRepositoryInterface;
+use App\Repositories\LeaveRepository;
+use App\Repositories\Interfaces\LeaveRepositoryInterface;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -28,9 +30,15 @@ class AppServiceProvider extends ServiceProvider
             DepartmentRepositoryInterface::class,
             DepartmentRepository::class
         );
+
         $this->app->bind(
             EmployeeRepositoryInterface::class,
             EmployeeRepository::class
+        );
+
+        $this->app->bind(
+            LeaveRepositoryInterface::class,
+            LeaveRepository::class
         );
     }
 

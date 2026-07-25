@@ -71,6 +71,8 @@
 
    <link rel="stylesheet" href="{{asset('dropify/dist/css/dropify.min.css')}}">
 
+   <!-- summernote -->
+  <link rel="stylesheet" href="{{asset('backend/plugins/summernote/summernote-bs4.min.css')}}">
  
   </head>
   <!--end::Head-->
@@ -102,6 +104,34 @@
               </a>
             </li>
             
+          @if(user()->role_id == 1)
+            <!--begin::Notifications Dropdown Menu-->
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link"
+                data-bs-toggle="dropdown"
+                href="#"
+                aria-label="Notifications: 15 unread"
+              >
+                <i class="bi bi-bell-fill bg-primary"></i>
+                <span class="navbar-badge badge text-bg-warning">{{count(unReadNotifications())}}</span>
+              </a>
+              <div class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
+                <span class="dropdown-item dropdown-header">{{count(unReadNotifications())}} Notifications</span>
+                <div class="dropdown-divider"></div>
+              @foreach(unReadNotifications() as $row)
+                <div class="dropdown-divider"></div>
+                <a href="{{url('/notification-read/'.$row->id)}}" class="dropdown-item">
+                  <i class="bi bi-people-fill me-2"></i> {{$row->data['title']}}
+                  <span class="float-end text-secondary fs-7">{{ $row->created_at->shortRelativeDiffForHumans() }}</span>
+                </a>
+              @endforeach
+                <div class="dropdown-divider"></div>
+                <a href="#" class="dropdown-item dropdown-footer"> See All Notifications </a>
+              </div>
+            </li>
+            <!--end::Notifications Dropdown Menu-->
+          @endif
             
             <li class="nav-item dropdown user-menu">
               <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
@@ -122,7 +152,7 @@
                   />
                   <p>
                     {{Auth::user()->name}}
-                    <small>{{date('d F Y',Auth::user()->created_at)}}</small>
+                    
                   </p>
                 </li>
                 <!--end::User Image-->
@@ -179,6 +209,39 @@
                   <p>Dashboard</p>
                 </a>
               </li>
+
+
+            @if(user()->role_id == 2)
+
+              <li class="nav-item">
+                <a href="#" class="nav-link">
+                  <i class="nav-icon bi bi-box-seam-fill"></i>
+                  <p>
+                    Leaves
+                    <i class="nav-arrow bi bi-chevron-right"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="{{route('leaves.create')}}" class="nav-link">
+                      <i class="nav-icon bi bi-circle"></i>
+                      <p>Add Leave</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="{{route('leaves.index')}}" class="nav-link">
+                      <i class="nav-icon bi bi-circle"></i>
+                      <p>All Leaves</p>
+                    </a>
+                  </li>
+
+                </ul>
+              </li>
+
+            @endif
+
+
+            @if(user()->role_id != 2)
 
               <li class="nav-item">
                 <a href="#" class="nav-link">
@@ -256,6 +319,8 @@
 
                 </ul>
               </li>
+
+            @endif
 
 
               <li class="nav-item">
@@ -679,6 +744,9 @@
   <script src="{{asset('backend/datatable/js/data-table-custom.js')}}"></script>
 
   <script src="{{asset('dropify/dist/js/dropify.min.js')}}"></script>
+
+  <!-- Summernote -->
+<script src="{{asset('backend/plugins/summernote/summernote-bs4.min.js')}}"></script>
 
   <script src="{{asset('custom/toastr.js')}}"></script>
  

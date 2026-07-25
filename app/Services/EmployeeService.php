@@ -15,9 +15,9 @@ class EmployeeService
     }
 
 
-    public function index($perPage)
+    public function index($request)
     {
-        return $this->employeeRepository->getAll($perPage);
+        return $this->employeeRepository->getAll($request);
     }
 
 

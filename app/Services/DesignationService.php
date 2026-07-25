@@ -15,9 +15,9 @@ class DesignationService
     }
 
 
-    public function index($perPage)
+    public function index($request)
     {
-        return $this->designationRepository->getAll($perPage);
+        return $this->designationRepository->getAll($request);
     }
 
 

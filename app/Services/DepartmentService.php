@@ -15,9 +15,9 @@ class DepartmentService
     }
 
 
-    public function index($perPage)
+    public function index($request)
     {
-        return $this->departmentRepository->getAll($perPage);
+        return $this->departmentRepository->getAll($request);
     }
 
 

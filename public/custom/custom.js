@@ -17,12 +17,12 @@ $(document).ready(function(){
    //$('.dropify').dropify();
 
 
-   // $('#description').summernote(
-   //    {
-   //      height: 150,
-   //      focus: false
-   //    }
-   //  );
+   $('.description').summernote(
+      {
+        height: 100,
+        focus: false
+      }
+    );
 
 
    //ensure numeric input 

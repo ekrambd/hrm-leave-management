@@ -177,20 +177,7 @@ class LeaveController extends Controller
      */
     public function update(Request $request, Leave $leave)
     {
-        DB::beginTransaction();
-        try
-        {
-            $leave = $this->employeeService->statusUpdate($request,$leave);
-            $notification = array(
-                'messege'=> "Successfully the leave's status has been updated",
-                'alert-type'=> 'success'
-            );
-            DB::commit();
-            return redirect('/leaves')->with($notification);
-        }catch(\Exception $e){
-            DB::rollback();
-            return response()->json(['status'=>false, 'code'=>$e->getCode(), 'message'=>$e->getMessage()],500);
-        }
+        //
     }
 
     /**
@@ -198,6 +185,14 @@ class LeaveController extends Controller
      */
     public function destroy(Leave $leave)
     {
-        //
+        try
+        {
+            $leave = $this->leaveService->destroy($leave);
+            if($leave){
+                return response()->json(['status'=>true, 'message'=>'Successfully the leave has been deleted']);
+            }
+        }catch(\Exception $e){
+            return response()->json(['status'=>false, 'code'=>$e->getCode(), 'message'=>$e->getMessage()],500);
+        }
     }
 }

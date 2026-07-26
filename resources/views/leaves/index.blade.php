@@ -94,7 +94,7 @@
                 type: "DELETE",
                 dataType: "json",
                 success: function(data) {
-                  departmentTable.ajax.reload(null, false);
+                  leaveTable.ajax.reload(null, false);
                   toastr.success(data.message);
                 }
             });

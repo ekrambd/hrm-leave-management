@@ -51,4 +51,9 @@ class LeaveService
     {
         return $this->leaveRepository->notificationRead($id);
     } 
+
+    public function destroy($leave)
+    {
+        return $this->leaveRepository->delete($leave);
+    }
 }

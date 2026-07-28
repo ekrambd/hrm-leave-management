@@ -161,7 +161,11 @@ class LeaveController extends Controller
             'employee.department',
             'employee.designation'
         ]);
-        return view('leaves.show',compact('leave'));
+       if (user()->role_id == 1) {
+            return view('leaves.admin_show', compact('leave'));
+        }
+
+        return view('leaves.user_show', compact('leave'));
     }
 
     /**
@@ -175,9 +179,20 @@ class LeaveController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Leave $leave)
+    public function update(LeaveRequest $request, Leave $leave)
     {
-        //
+        try
+        {
+            $leave = $this->leaveService->statusUpdate($request,$leave);
+            $notification = array(
+                'messege'=> "Successfully updated",
+                'alert-type'=> 'success'
+            );
+            return redirect('/leave-requests')->with($notification);
+        }catch(\Exception $e){
+            \Log::error($e);
+            return response()->json(['status'=>false, 'code'=>$e->getCode(), 'message'=>$e->getMessage()],500);
+        }
     }
 
     /**

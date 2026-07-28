@@ -67,21 +67,7 @@
 @push('scripts')
  <script>
   $(document).ready(function(){
-  	let leaveID;
-
-  	let socket = io("{{ config('services.socket.url') }}", {
-       transports: ["websocket"]
-    });
-
-    let Admin_ID = "{{ user()->id }}";
-
-    socket.on("connect", function () {
-
-        console.log("Connected:", socket.id);
-
-        socket.emit("join_admin_room", Admin_ID);
-
-    });
+  	
   	var leaveRequestTable = $('#leave-request-table').DataTable({
             searching: true,
             processing: true,
@@ -113,8 +99,12 @@
     });
 
 
-    socket.on("leave_request_created", function (data) {
-    	leaveRequestTable.ajax.reload();
+    window.socket.on("leave_request_created", function(data){
+
+        console.log("Leave request received", data);
+
+        leaveRequestTable.ajax.reload(null, false);
+
     });
 
   });	

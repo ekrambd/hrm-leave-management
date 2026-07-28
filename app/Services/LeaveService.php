@@ -40,9 +40,11 @@ class LeaveService
     } 
 
     public function statusUpdate($request,$leave)
-    {
-        return $this->leaveRepository->statusUpdate($leave,[
+    {   
+        $employee = employeeDetails($request,$leave->employee_id);
+        return $this->leaveRepository->statusUpdate($leave,$employee,[
             'type'  => $request->type,
+            'leave_review' => $request->leave_review,
             'status' => $request->status,
         ]); 
     }

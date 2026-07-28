@@ -38,7 +38,7 @@ function designations()
 	return $designations;
 }
 
-function employeeDetails($id)
+function employeeDetails($request,$id)
 {
 	$employee = employeeService()->index($request)->where('id',$id)->first();
 	return $employee;

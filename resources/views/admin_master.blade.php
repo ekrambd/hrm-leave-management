@@ -104,7 +104,7 @@
               </a>
             </li>
             
-          @if(user()->role_id == 1)
+          
             <!--begin::Notifications Dropdown Menu-->
             <li class="nav-item dropdown">
               <a
@@ -133,7 +133,7 @@
               </div>
             </li>
             <!--end::Notifications Dropdown Menu-->
-          @endif
+          
             
             <li class="nav-item dropdown user-menu">
               <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">

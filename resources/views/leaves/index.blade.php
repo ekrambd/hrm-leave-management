@@ -62,45 +62,82 @@
 @endsection
 
 @push('scripts')
- <script>
-  $(document).ready(function(){
-  	let leave_id;
-  	var leaveTable = $('#leave-table').DataTable({
-            searching: true,
-            processing: true,
-            serverSide: true,
-            ordering: false,
-            responsive: true,
-            stateSave: true,
-            ajax: {
-                url: "{{ route('leaves.index') }}"
-            },
-            columns: [
-                { data: 'id', name: 'id' },
-                { data: 'from_date', name: 'from_date' },
-                { data: 'to_date', name: 'to_date' },
-                { data: 'leave_duration', name: 'leave_duration' },
-                { data: 'status', name: 'status' },
-                { data: 'action', name: 'action', orderable: false, searchable: false }
-            ]
+<script>
+$(document).ready(function(){
+
+    let leave_id;
+
+    var leaveTable = $('#leave-table').DataTable({
+        searching: true,
+        processing: true,
+        serverSide: true,
+        ordering: false,
+        responsive: true,
+        stateSave: true,
+        ajax: {
+            url: "{{ route('leaves.index') }}"
+        },
+        columns: [
+            { data: 'id', name: 'id' },
+            { data: 'from_date', name: 'from_date' },
+            { data: 'to_date', name: 'to_date' },
+            { data: 'leave_duration', name: 'leave_duration' },
+            { data: 'status', name: 'status' },
+            { data: 'action', name: 'action', orderable:false, searchable:false }
+        ]
     });
 
-  	$(document).on('click', '.delete-leave', function(e) {
+
+    $(document).on('click', '.delete-leave', function(e){
+
         e.preventDefault();
+
         leave_id = $(this).data('id');
-        if (confirm('Do you want to delete this leave?')) {
+
+        if(confirm('Do you want to delete this leave?')){
+
             $.ajax({
+
                 url: "{{ url('/leaves') }}/" + leave_id,
-                type: "DELETE",
-                dataType: "json",
-                success: function(data) {
-                  leaveTable.ajax.reload(null, false);
-                  toastr.success(data.message);
+
+                type:"DELETE",
+
+                dataType:"json",
+
+                success:function(data){
+
+                    leaveTable.ajax.reload(null,false);
+
+                    toastr.success(data.message);
+
                 }
+
             });
+
         }
+
     });
 
-  });	
- </script>
+
+    // Socket Check
+    if(window.socket){
+
+        window.socket.on("leave_status_updated", function(data){
+
+            console.log("Leave Status received", data);
+
+
+            leaveTable.ajax.reload(null,false);
+
+        });
+
+    }else{
+
+        console.log("Socket not initialized");
+
+    }
+
+
+});
+</script>
 @endpush

@@ -8,7 +8,7 @@ interface LeaveRepositoryInterface
 
     public function create(array $data);
 
-    public function statusUpdate($leave, array $data);
+    public function statusUpdate($leave, $employee, array $data);
 
     public function notificationRead($id);
 

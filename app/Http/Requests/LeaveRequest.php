@@ -27,7 +27,7 @@ class LeaveRequest extends FormRequest
         ];
 
         if (user()->role_id == 1) {
-            $rules['leave_review'] = 'required';
+            $rules['leave_review'] = 'nullable';
             $rules['status'] = 'required|in:pending,approved,rejected';
         } elseif(user()->role_id == 2) {
             $rulses['from_date']    = 'required|date_format:Y-m-d';

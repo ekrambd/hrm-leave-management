@@ -9,6 +9,8 @@ class Employee extends Model
 {
     use HasFactory;
 
+    protected $appends = ['total_leave_balance'];
+
     protected $fillable = [
         'user_id',
         'department_id',
@@ -38,5 +40,12 @@ class Employee extends Model
     public function leaves()
     {
         return $this->hasMany(Leave::class);
+    }
+
+    public function getTotalLeaveBalanceAttribute(): int
+    {
+        return ($this->sick_leave ?? 0)
+            + ($this->paid_leave ?? 0)
+            + ($this->casual_leave ?? 0);
     }
 }

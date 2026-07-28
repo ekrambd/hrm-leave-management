@@ -46,19 +46,41 @@ class LeaveRepository implements LeaveRepositoryInterface
         }
     }
 
-    public function statusUpdate($leave, array $data)
+    public function statusUpdate($leave, $employee, array $data)
     {   
     	$leave->status = $data['status'];
+        $leave->type = $data['type'];
+        $leave->leave_review = $data['leave_review'];
         $leave->update();
-        $employee = employeeDetails($leave->employee_id);
-        $user = $employee->user();
-        $admin->notify(
+        
+        $user = $employee->user;
+
+        $user->notify(
             new LeaveRequestNotification(
                 "#{$leave->id} has been {$leave->status}",
                 "Leave Request Response Alert!",
                 $leave->id
             )
         );
+
+        // Socket Notification
+        Http::post(config('services.socket.url').'/leave-status-update', [
+
+            'user_id' => $user->id,
+
+            'payload' => [
+                'leave_id' => $leave->id,
+                'employee_name' => $leave->employee->user->name,
+                'title' => 'Leave Request Response',
+                'message' => 'Leave Request Response From Admin',
+                'created_at' => now()->diffForHumans(),
+                'notification_id' => $user->fresh()
+                    ->unreadNotifications()
+                    ->latest()
+                    ->first()?->id,
+            ]
+
+        ]);
         return $leave->fresh(); 
     }
 

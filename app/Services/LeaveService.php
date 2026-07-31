@@ -58,4 +58,9 @@ class LeaveService
     {
         return $this->leaveRepository->delete($leave);
     }
+
+    public function saveAiReview($data)
+    {
+        return $this->leaveRepository->saveAiReview($data,);
+    }
 }

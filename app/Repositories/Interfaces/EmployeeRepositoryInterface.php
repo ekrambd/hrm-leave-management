@@ -10,4 +10,6 @@ interface EmployeeRepositoryInterface
     public function update($employee, array $data);
 
     public function delete($employee);
+
+    public function context($employee_id, $leave = null);
 }

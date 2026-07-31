@@ -62,12 +62,34 @@
 
   </div>
  </main>
+
+ <div class="modal" id="ai-review-modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">AI Review</h5>
+        
+      </div>
+      <div class="modal-body">
+        <div class="ai-result">
+          <div class="ai-result-type"></div>
+          <div class="ai-result-review"></div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        
+        <button type="button" class="btn btn-danger close-modal" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 @endsection
 
 @push('scripts')
  <script>
   $(document).ready(function(){
-  	
+  	let leave_id;
   	var leaveRequestTable = $('#leave-request-table').DataTable({
             searching: true,
             processing: true,
@@ -105,6 +127,76 @@
 
         leaveRequestTable.ajax.reload(null, false);
 
+    });
+
+
+    $(document).on('click', '.ai-review', function(e){
+
+        e.preventDefault();
+
+
+
+        leave_id = $(this).data('id');
+
+
+        $('.ai-btn-txt-'+leave_id).html(`
+                <button type="button" 
+                    class="btn btn-info btn-sm action-button text-light ai-review" 
+                    data-id="${leave_id}">
+                    <i class="fa fa-spinner fa-spin"></i> Loading...
+                </button>
+            `);
+
+        $.ajax({
+
+            url: "{{ url('/ai-context') }}",
+
+            type:"POST",
+
+            dataType:"json",
+
+            data:{'leave_id':leave_id},
+
+            success:function(response){
+
+              $('#ai-review-modal').modal('show');
+
+              $('.ai-btn-txt-'+leave_id).html(`
+                <button type="button" 
+                    class="btn btn-info btn-sm action-button text-light ai-review" 
+                    data-id="${leave_id}">
+                    <i class="bi bi-robot"></i>
+                </button>
+            `);
+
+              $('.ai-result-type').html(`
+                  <h3>Recommend: ${response.data.type}</h3>
+              `);
+
+              $('.ai-result-review').html(`
+                  <h3>Review</h3>
+                  <p>${response.data.ai_review}</p>
+              `);
+
+
+              leaveRequestTable.ajax.reload(null,false);
+
+                //toastr.success(data.message);
+
+            }
+
+        });
+
+        
+
+    });
+
+    $(document).on('click', '.close-modal', function(e){
+      e.preventDefault();
+      $('.ai-result-type').text('');
+
+      $('.ai-result-review').text('');
+      $('#ai-review-modal').modal('hide');
     });
 
   });	

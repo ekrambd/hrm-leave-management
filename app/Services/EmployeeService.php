@@ -87,4 +87,9 @@ class EmployeeService
         return $this->employeeRepository->delete($employee);
     }
 
+    public function context($employee_id,$leave)
+    {
+        return $this->employeeRepository->context($employee_id,$leave);
+    }
+
 }

@@ -12,5 +12,7 @@ interface LeaveRepositoryInterface
 
     public function notificationRead($id);
 
+    public function saveAiReview($data);
+
     public function delete($leave);
 }

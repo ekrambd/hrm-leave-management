@@ -19,6 +19,7 @@ return new class extends Migration
             $table->text('leave_review')->nullable();
             $table->date('issue_date');
             $table->date('result_date')->nullable();
+            $table->integer('leave_duration');
             $table->enum('type', ['sick', 'paid', 'unpaid', 'casual', 'special_consideration']);
             $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
             $table->timestamps();

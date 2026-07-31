@@ -64,7 +64,16 @@
                               </div>
 
 
-                              
+                              <div class="mb-3">
+                                  <label for="leave_duration" class="form-label">Leave Duration ( Days )</label>
+
+                                  <input type="text"
+                                         class="form-control"
+                                         id="leave_duration"
+                                         value="{{ $leave->leave_duration }}"
+                                         readonly>
+
+                              </div>
 
                               <div class="mb-3">
                                   <label for="leave_type" class="form-label">
@@ -110,6 +119,32 @@
                                   @enderror
                               </div>
 
+                          @if($leave->status == 'approved')
+                            <div class="mb-3">
+                                  <label for="status" class="form-label">
+                                      Select Status
+                                  </label>
+
+                                  <select class="form-control select2bs4"
+                                          name="status"
+                                          id="status"
+                                          required>
+
+                                      <option value="approved" selected="">
+                                          Approved
+                                      </option>
+
+
+                                  </select>
+
+                                  @error('status')
+                                    <p class="alert alert-danger">{{ $message }}</p>
+                                  @enderror
+
+                            </div>
+
+                          @else
+
                               <div class="mb-3">
                                   <label for="status" class="form-label">
                                       Select Status
@@ -144,6 +179,7 @@
                                   @enderror
 
                               </div>
+                          @endif
 
                             <div class="mb-3" id="db_leave_review"></div>
 
@@ -330,18 +366,24 @@
  <script>
    $(document).ready(function(){
       $(document).on('change', '#status',function(){
-        let status = $(this).val();
-        if(status == 'rejected')
+        if(confirm('Are you sure want to change the status?'))
         {
-          $('#db_leave_review').html(`
-            <label for="leave_review" class="form-label">Remarks</label>
-            <textarea class="form-control" name="leave_review" id="leave_review" placeholder="Remarks">{!!old('leave_review')!!}</textarea/>
-          `);
-        }else{
-          $('#db_leave_review').html('');
-        }  
+            let status = $(this).val();
+            if(status == 'rejected')
+            {
+              $('#db_leave_review').html(`
+                <label for="leave_review" class="form-label">Remarks</label>
+                <textarea class="form-control" name="leave_review" id="leave_review" placeholder="Remarks">{!!old('leave_review')!!}</textarea/>
+              `);
+            }else{
+              $('#db_leave_review').html('');
+            } 
+        }           
         
       });
+
+      
+
    });
  </script>
 @endpush

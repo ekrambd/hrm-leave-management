@@ -20,6 +20,12 @@ function user()
 	return $user;
 }
 
+function employeeUser($employee)
+{
+    $user = $employee->load(['user','designation','department']);
+    return $user;
+}
+
 function admin()
 {
     $user = User::where('role_id',1)->first();

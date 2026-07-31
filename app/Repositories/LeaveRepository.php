@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Leave;
+use App\Models\AiReview;
 use App\Repositories\Interfaces\LeaveRepositoryInterface;
 use App\Notifications\LeaveRequestNotification;
 use App\Models\User;
@@ -48,6 +49,21 @@ class LeaveRepository implements LeaveRepositoryInterface
 
     public function statusUpdate($leave, $employee, array $data)
     {   
+
+        if($data['status'] == 'approved')
+        {
+            $type = $data['type'] == 'paid' || $data['type'] == 'special_consideration'?"paid":$data['type'];
+            if($type == 'sick')
+            {
+                $employee->sick_leave = $employee->sick_leave - $leave->leave_duration;
+            }elseif($type == 'paid'){
+                $employee->paid_leave = $employee->paid_leave - $leave->leave_duration;
+            }elseif($type == 'casual'){
+                $employee->casual_leave = $employee->casual_leave - $leave->leave_duration;
+            }    
+            $employee->update();
+        }    
+
     	$leave->status = $data['status'];
         $leave->type = $data['type'];
         $leave->leave_review = $data['leave_review'];
@@ -96,5 +112,11 @@ class LeaveRepository implements LeaveRepositoryInterface
     public function delete($leave)
     {    
         return $leave->delete();
+    }
+
+    public function saveAiReview($data)
+    {
+        $review = AiReview::create($data);
+        return $review;
     }
 }

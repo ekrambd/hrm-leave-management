@@ -111,10 +111,9 @@ class LeaveController extends Controller
 
                 ->addColumn('action', function ($row) {
                     $btn = "";
-                    $btn .= '&nbsp;';
-                    $btn .= ' <a href="' . route('leaves.show', $row->id) . '" class="btn btn-primary btn-sm action-button edit-product-leave"><i class="fa fa-eye"></i></a>';
-                    $btn .= '&nbsp;';
-                    $btn .= ' <a href="' . route('leaves.show', $row->id) . '" class="btn btn-danger btn-sm action-button" data-id="' . $row->id . '"><i class="nav-icon bi bi-table"></i></a>';
+                    $btn .= '<div><a href="' . route('leaves.show', $row->id) . '" class="btn btn-primary btn-sm action-button edit-product-leave"><i class="fa fa-eye"></i></a></div>';
+                  
+                    $btn .= '<div class="ai-btn-txt-'.$row->id.'"><button type="button" class="btn btn-info btn-sm action-button text-light ai-review" data-id="' . $row->id . '"><i class="bi bi-robot"></i></button></div>';
                     return $btn;
                 })
                 ->rawColumns(['action','employee_name','employee_code','department','designation','']) 
@@ -182,8 +181,12 @@ class LeaveController extends Controller
     public function update(LeaveRequest $request, Leave $leave)
     {
         try
-        {
-            $leave = $this->leaveService->statusUpdate($request,$leave);
+        {   
+            if($leave->status != 'approved')
+            {
+                $leave = $this->leaveService->statusUpdate($request,$leave);
+            }    
+            
             $notification = array(
                 'messege'=> "Successfully updated",
                 'alert-type'=> 'success'

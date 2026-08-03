@@ -50,6 +50,12 @@ function employeeDetails($request,$id)
 	return $employee;
 }
 
+function employeeByCode($request,$employee_code)
+{
+    $employee = employeeService()->index($request)->where('employee_code',$employee_code)->first();
+    return $employee;
+}
+
 function unReadNotifications()
 {
     return user()

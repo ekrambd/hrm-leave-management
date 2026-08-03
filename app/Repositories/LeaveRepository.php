@@ -67,6 +67,7 @@ class LeaveRepository implements LeaveRepositoryInterface
     	$leave->status = $data['status'];
         $leave->type = $data['type'];
         $leave->leave_review = $data['leave_review'];
+        $leave->result_date = date('Y-m-d');
         $leave->update();
         
         $user = $employee->user;

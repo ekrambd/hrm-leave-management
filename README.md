@@ -1,66 +1,353 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# AI Powered HR Leave Management System
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+An enterprise-level HR Leave Management System built with Laravel and enhanced with OpenAI AI Review Assistant and Node.js + Socket.IO Real-Time Notification System.
 
-## About Laravel
+The system helps organizations manage employee leave requests, analyze leave patterns, provide AI-assisted HR recommendations, and deliver real-time updates between employees and administrators.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+==================================================
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+🚀 Features
 
-## Learning Laravel
+==================================================
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## HR Leave Management System
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Complete leave management workflow for employees and HR/Admin.
 
-## Laravel Sponsors
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+Features:
 
-### Premium Partners
+- Employee leave request submission
+- Leave approval and rejection workflow
+- Leave balance management
+- Leave history tracking
+- Employee-wise leave records
+- Department-wise leave management
+- Leave status management
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
 
-## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+==================================================
 
-## Code of Conduct
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## 🤖 AI Leave Review Assistant (OpenAI)
 
-## Security Vulnerabilities
+==================================================
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
 
-## License
+Integrated OpenAI-powered HR assistant that analyzes employee leave requests and provides HR recommendations.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+The AI analyzes:
+
+- Employee profile
+- Department and designation
+- Available leave balance
+- Previous leave history
+- Leave request patterns
+- Current leave reason
+
+
+AI Features:
+
+- Leave balance verification
+- Previous leave pattern analysis
+- Leave behavior analysis
+- HR recommendation generation
+- Structured JSON AI response
+- AI review result storage
+
+
+Example AI Response:
+
+
+{
+    "recommendation": "positive",
+    "confidence": 85,
+    "ai_review": "Employee has sufficient leave balance and normal leave usage pattern."
+}
+
+
+
+==================================================
+
+
+## ⚡ Real-Time Notification System (Node.js + Socket.IO)
+
+==================================================
+
+
+Implemented a real-time notification system using Node.js and Socket.IO to provide instant updates between employees and HR/Admin users.
+
+The system enables real-time communication without requiring users to refresh the page manually.
+
+
+Real-Time Features:
+
+- Instant leave request notification
+- Real-time admin dashboard update
+- Live leave request table refresh
+- WebSocket-based communication
+- Event-driven notification system
+
+
+Real-Time Workflow:
+
+
+Employee submits leave request
+
+        ↓
+
+Laravel Backend Processes Request
+
+        ↓
+
+Notification Event Triggered
+
+        ↓
+
+Node.js + Socket.IO Server
+
+        ↓
+
+Broadcast Event to Connected Users
+
+        ↓
+
+Admin Dashboard Updates Instantly
+
+
+
+Implementation:
+
+- Laravel handles leave request processing and business logic
+- Node.js + Socket.IO manages real-time connections
+- Frontend listens for socket events and updates UI dynamically
+
+
+Example Event:
+
+
+socket.on("leave_request_created", function(data){
+
+    leaveRequestTable.ajax.reload(null, false);
+
+});
+
+
+
+Benefits:
+
+- No page refresh required
+- Faster HR response time
+- Better user experience
+- Real-time workflow management
+
+
+
+==================================================
+
+
+## 🔎 Advanced Leave Filtering
+
+==================================================
+
+
+Implemented advanced filtering system for HR/Admin users.
+
+
+Supported Filters:
+
+- Employee ID
+- Employee Code
+- Department
+- Designation
+- Leave Status
+- Leave Type
+- Date Range
+- Year
+- Month
+
+
+
+==================================================
+
+
+## 📊 Leave Request Management
+
+==================================================
+
+
+Admin leave request table includes:
+
+
+- Server-side DataTable processing
+- AJAX loading
+- Searching
+- Filtering
+- Pagination
+- Dynamic actions
+- Real-time data update
+
+
+
+==================================================
+
+
+## 🧠 Employee Context Generation
+
+==================================================
+
+
+AI review uses structured employee context data including:
+
+
+- Employee information
+- Department
+- Designation
+- Leave balance
+- Previous leave history
+- Current leave request
+
+
+This allows AI to provide better HR recommendations based on actual employee data.
+
+
+==================================================
+
+## 🔐 Role-Based Access Control (RBAC)
+
+==================================================
+
+Implemented role-based authorization using Laravel Gates to secure both routes and user interface components.
+
+Roles:
+
+- Admin
+- Employee
+
+Authorization Features:
+
+- Laravel Gate authorization
+- Route protection using `can` middleware
+- Blade authorization using `@can` and `@cannot`
+- Role-based navigation menu
+- Secure access to admin modules
+- Restricted employee access
+
+Example:
+
+Route::middleware('can:admin')
+
+@can('admin')
+
+@can('employee')
+
+Benefits:
+
+- Centralized authorization logic
+- Clean and maintainable code
+- Secure route protection
+- Secure UI rendering
+- Easy to extend for future roles and permissions
+
+
+
+==================================================
+
+
+## 🛠️ Technology Stack
+
+==================================================
+
+
+Backend:
+
+- Laravel
+- PHP
+- MySQL
+
+
+Frontend:
+
+- Blade Template
+- Bootstrap
+- jQuery
+- Yajra DataTables
+- Blade Components
+
+
+Real-Time:
+
+- Node.js
+- Socket.IO
+- WebSocket
+
+
+Artificial Intelligence:
+
+- OpenAI API
+- JSON Structured Response
+
+
+
+==================================================
+
+
+## 📂 Core Modules
+
+==================================================
+
+
+HR Leave Management System
+
+
+├── Employee Management
+
+├── Department Management
+
+├── Leave Request Management
+
+├── Leave Approval Workflow
+
+├── AI Leave Review Assistant
+
+├── Real-Time Notification System
+
+└── Leave Reporting
+
+
+
+==================================================
+
+
+## 🎯 Project Highlights
+
+==================================================
+
+
+- AI-powered HR leave review system
+- OpenAI API integration
+- Real-time notification using Node.js + Socket.IO
+- Clean Laravel Service/Repository architecture
+- Advanced leave filtering and reporting
+- Server-side DataTable implementation
+- Modern full-stack web application design
+
+
+
+==================================================
+
+
+## 👨‍💻 Developer
+
+==================================================
+
+
+Built as a Laravel project demonstrating:
+
+- Enterprise Laravel Development
+- AI Integration
+- Real-Time Application Development
+- Backend Engineering Practices

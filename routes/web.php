@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\AccessController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\SettingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +26,8 @@ Route::get('/admin-logout', [AccessController::class, 'adminLogout'])->name('adm
 Route::group(['middleware' => 'prevent-back-history'],function(){
    //dashboard
 	Route::get('/dashboard', [DashboardController::class, 'dashboard'])->name('dashboard');
-
+	//settings
+	   Route::get('/change-password', [SettingController::class, 'changePassword'])->name('change.password');
+	   Route::post('password-change', [SettingController::class, 'passwordChange'])->name('password.change');
 });
 

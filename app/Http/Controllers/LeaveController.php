@@ -86,6 +86,24 @@ class LeaveController extends Controller
                 });
             }
 
+            if ($request->filled('from_date')) {
+
+                $query->whereDate('issue_date', '>=', $request->from_date);
+
+            }
+
+            if ($request->filled('to_date')) {
+
+                $query->whereDate('issue_date', '<=', $request->to_date);
+
+            }
+
+            if ($request->filled('status')) {
+
+                $query->where('status', $request->status);
+
+            } 
+
             $leaves = $query->latest();
 
             return DataTables::of($leaves)

@@ -3,7 +3,10 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LeaveController;
 
-Route::group(['middleware' => 'prevent-back-history'],function(){
+Route::middleware([
+    'prevent-back-history',
+    'can:employee'
+])->group(function () {
    //leaves
    Route::get('leaves/create', [LeaveController::class, 'create'])->name('leaves.create');
    Route::get('leaves', [LeaveController::class, 'index'])->name('leaves.index');

@@ -8,7 +8,12 @@ use App\Http\Controllers\DesignationController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\LeaveController;
 
-Route::group(['middleware' => 'prevent-back-history'],function(){
+
+Route::middleware([
+    'prevent-back-history',
+    'can:admin'
+])->group(function () {
+	
 	//departments
 	   Route::get('departments/create', [DepartmentController::class, 'create'])->name('departments.create');
 	   Route::get('departments', [DepartmentController::class, 'index'])->name('departments.index');
@@ -34,4 +39,5 @@ Route::group(['middleware' => 'prevent-back-history'],function(){
 
 	//leave requests
 	   Route::get('/leave-requests', [LeaveController::class, 'leaveRequests'])->name('leaves.requests');
+
 });

@@ -2,6 +2,8 @@
 use App\Models\Department;
 use App\Models\Designation;
 use App\Services\EmployeeService;
+use App\Services\LeaveService;
+use App\Services\DepartmentService;
 use App\Models\User;
 
 
@@ -13,6 +15,28 @@ if (!function_exists('employeeService')) {
     }
 
 }
+
+
+if (!function_exists('leaveService')) {
+
+    function leaveService()
+    {
+        return app(LeaveService::class);
+    }
+
+}
+
+
+
+if (!function_exists('departmentService')) {
+
+    function departmentService()
+    {
+        return app(DepartmentService::class);
+    }
+
+}
+
 
 function user()
 {
@@ -49,6 +73,7 @@ function employeeDetails($request,$id)
 	$employee = employeeService()->index($request)->where('id',$id)->first();
 	return $employee;
 }
+
 
 function employeeByCode($request,$employee_code)
 {

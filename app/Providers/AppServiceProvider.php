@@ -13,6 +13,7 @@ use App\Repositories\EmployeeRepository;
 use App\Repositories\Interfaces\EmployeeRepositoryInterface;
 use App\Repositories\LeaveRepository;
 use App\Repositories\Interfaces\LeaveRepositoryInterface;
+use Illuminate\Support\Facades\Gate;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -47,6 +48,41 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {   
+
+        Gate::define('manage-departments', function ($user) {
+            return in_array($user->role_id, [1]);
+        });
+
+        Gate::define('manage-employees', function ($user) {
+            return in_array($user->role_id, [1]);
+        });
+
+        Gate::define('manage-leave-requests', function ($user) {
+            return in_array($user->role_id, [1]);
+        });
+
+
+        Gate::define('manage-designations', function ($user) {
+            return in_array($user->role_id, [1]);
+        });
+
+
+        Gate::define('manage-employees', function ($user) {
+            return in_array($user->role_id, [1]);
+        });
+
+        Gate::define('employee-leaves', function ($user) {
+            return $user->role_id == 2;
+        });
+
+        Gate::define('admin', function ($user) {
+            return $user->role_id === 1;
+        });
+
+        Gate::define('employee', function ($user) {
+            return $user->role_id === 2;
+        });
+
         Paginator::useBootstrap();
         Schema::defaultStringLength(191);
     }

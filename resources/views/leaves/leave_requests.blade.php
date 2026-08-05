@@ -27,9 +27,45 @@
           <div class="row g-4">
             <div class="col-md-12">
              <div class="card">
-               <div class="card-header bg-primary text-light"><div class="card-title">All Leave Request</div></div>
+               <div class="card-header bg-primary text-light"><div class="card-title">All Leave Request</div>
+             </div>
                 <div class="card-body">
-               
+                <div class="row mb-3">
+
+                    <div class="col-md-3">
+                        <label>From Date</label>
+                        <input type="date" class="form-control" id="from_date">
+                    </div>
+
+                    <div class="col-md-3">
+                        <label>To Date</label>
+                        <input type="date" class="form-control" id="to_date">
+                    </div>
+
+                    <div class="col-md-3">
+                        <label>Status</label>
+
+                        <select class="form-control" id="status">
+                            <option value="">All</option>
+                            <option value="pending">Pending</option>
+                            <option value="approved">Approved</option>
+                            <option value="rejected">Rejected</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-3 d-flex align-items-end">
+
+                        <button class="btn btn-primary me-2" id="filterBtn">
+                            Filter
+                        </button>
+
+                        <button class="btn btn-secondary" id="resetBtn">
+                            Reset
+                        </button>
+
+                    </div>
+
+                </div>
                   <div class="table-responsive">
                   	<table class="table table-striped table-bordered bg-info data-table" id="leave-request-table">
                   	<thead>
@@ -39,6 +75,7 @@
                        <th>Code</th>
                        <th>Department</th>
                        <th>Designation</th>
+                       <th>Issue Date</th>
                        <th>Start Date</th>
                        <th>To Date</th>
                        <th>Durantion (Days)</th>
@@ -99,12 +136,20 @@
             stateSave: true,
             ajax: {
                 url: "{{ route('leaves.requests') }}",
+
                 data:function(d){
 
-	                d.search = $('.dataTables_filter input').val();
+                  d.search = $('.dataTables_filter input').val();
+
+                  d.from_date = $('#from_date').val();
+
+                  d.to_date = $('#to_date').val();
+
+                  d.status = $('#status').val();
+
+                }
 
 
-	            }
             },
             columns: [
                 { data: 'id', name: 'id' },
@@ -112,6 +157,7 @@
                 { data: 'employee_code', name: 'employee_code' },
                 { data: 'department', name: 'department' },
                 { data: 'designation', name: 'designation' },
+                { data: 'issue_date', name: 'issue_date' },
                 { data: 'from_date', name: 'from_date' },
                 { data: 'to_date', name: 'to_date' },
                 { data: 'leave_duration', name: 'leave_duration' },
@@ -119,6 +165,26 @@
                 { data: 'action', name: 'action', orderable: false, searchable: false }
             ]
     });
+
+
+    $('#filterBtn').click(function(){
+
+      leaveRequestTable.ajax.reload();
+
+  });
+
+
+    $('#resetBtn').click(function(){
+
+      $('#from_date').val('');
+
+      $('#to_date').val('');
+
+      $('#status').val('');
+
+      leaveRequestTable.ajax.reload();
+
+  });
 
 
     window.socket.on("leave_request_created", function(data){

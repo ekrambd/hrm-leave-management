@@ -31,7 +31,7 @@ Route::middleware([
 
 	//employees
 		Route::get('employees/create', [EmployeeController::class, 'create'])->name('employees.create');
-	   Route::get('employees', [EmployeeController::class, 'index'])->name('employees.index');
+	    Route::get('employees', [EmployeeController::class, 'index'])->name('employees.index');
 		Route::post('employees', [EmployeeController::class, 'store'])->name('employees.store');
 		Route::get('employees/{employee}', [EmployeeController::class, 'show'])->name('employees.show');
 		Route::patch('employees/{employee}', [EmployeeController::class, 'update'])->name('employees.update');
@@ -40,5 +40,5 @@ Route::middleware([
 	//leave requests
 	   Route::get('/leave-requests', [LeaveController::class, 'leaveRequests'])->name('leaves.requests');
 	   Route::get('/leave-requests/{leave}', [LeaveController::class, 'showLeaveRequest'])->name('leave.requests');
-
+		Route::patch('leaves/{leave}', [LeaveController::class, 'update'])->name('leaves.update');
 });

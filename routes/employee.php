@@ -12,7 +12,7 @@ Route::middleware([
    Route::get('leaves', [LeaveController::class, 'index'])->name('leaves.index');
 	Route::post('leaves', [LeaveController::class, 'store'])->name('leaves.store');
 	Route::get('leaves/{leave}', [LeaveController::class, 'show'])->name('leaves.show');
-	Route::patch('leaves/{leave}', [LeaveController::class, 'update'])->name('leaves.update');
+	
 	Route::delete('leaves/{leave}', [LeaveController::class, 'destroy'])->name('leaves.delete');
 
 });

@@ -129,7 +129,7 @@ class LeaveController extends Controller
 
                 ->addColumn('action', function ($row) {
                     $btn = "";
-                    $btn .= '<div><a href="' . route('leaves.show', $row->id) . '" class="btn btn-primary btn-sm action-button edit-product-leave"><i class="fa fa-eye"></i></a></div>';
+                    $btn .= '<div><a href="' . route('leave.requests', $row->id) . '" class="btn btn-primary btn-sm action-button edit-product-leave"><i class="fa fa-eye"></i></a></div>';
                   
                     $btn .= '<div class="ai-btn-txt-'.$row->id.'"><button type="button" class="btn btn-info btn-sm action-button text-light ai-review" data-id="' . $row->id . '"><i class="bi bi-robot"></i></button></div>';
                     return $btn;
@@ -178,11 +178,18 @@ class LeaveController extends Controller
             'employee.department',
             'employee.designation'
         ]);
-       if (user()->role_id == 1) {
-            return view('leaves.admin_show', compact('leave'));
-        }
 
         return view('leaves.user_show', compact('leave'));
+    }
+
+    public function showLeaveRequest(Leave $leave)
+    {
+        $leave->load([
+            'employee.department',
+            'employee.designation'
+        ]);
+
+        return view('leaves.admin_show', compact('leave'));
     }
 
     /**

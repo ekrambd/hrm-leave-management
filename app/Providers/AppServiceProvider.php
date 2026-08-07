@@ -50,29 +50,29 @@ class AppServiceProvider extends ServiceProvider
     {   
 
         Gate::define('manage-departments', function ($user) {
-            return in_array($user->role_id, [1]);
+            return $user->role_id == 1;
         });
 
         Gate::define('manage-employees', function ($user) {
-            return in_array($user->role_id, [1]);
+            return $user->role_id == 1;
         });
 
         Gate::define('manage-leave-requests', function ($user) {
-            return in_array($user->role_id, [1]);
+            return $user->role_id == 1;
         });
 
 
         Gate::define('manage-designations', function ($user) {
-            return in_array($user->role_id, [1]);
+            return $user->role_id == 1;
         });
 
 
         Gate::define('manage-employees', function ($user) {
-            return in_array($user->role_id, [1]);
+            return $user->role_id == 1;
         });
 
         Gate::define('employee-leaves', function ($user) {
-            return $user->role_id == 2;
+            return in_array($user->role_id, [1, 2]);
         });
 
         Gate::define('admin', function ($user) {

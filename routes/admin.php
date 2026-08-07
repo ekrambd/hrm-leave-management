@@ -39,5 +39,6 @@ Route::middleware([
 
 	//leave requests
 	   Route::get('/leave-requests', [LeaveController::class, 'leaveRequests'])->name('leaves.requests');
+	   Route::get('/leave-requests/{leave}', [LeaveController::class, 'showLeaveRequest'])->name('leave.requests');
 
 });
